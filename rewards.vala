@@ -1,31 +1,28 @@
 #!/bin/env -S vala --pkg gio-2.0 --pkg gee-0.8
 
-using GLib;
-using Gee;
-
 int main(string[] args) {
-    var list = new LinkedList<string>();
+    var list = new Gee.LinkedList<string>();
 
     try {
-        var file = File.new_for_path("./words");
-        var dis = new DataInputStream(file.read());
+        var f = File.new_for_path("./words");
+        var dis = new DataInputStream(f.read());
         string? line;
 
         while ((line = dis.read_line(null)) != null) {
             list.add(line);
         }
 
-        foreach (var item in list) {
-            string encoded_query = Uri.escape_string(item, null, false);
-            string command = "firefox https://www.bing.com/search?q=" + encoded_query + "&FORM=R5FD";
+        foreach (var i in list) {
+            string e = Uri.escape_string(i, null, false);
+            string c = "firefox https://www.bing.com/search?q=" + e + "&FORM=R5FD";
 
-            GLib.Process.spawn_command_line_async(command);
+            GLib.Process.spawn_command_line_async(c);
 
             Thread.usleep(20000000);
         }
 
-    } catch (Error e) {
-        stderr.printf("Error reading file: %s\n", e.message);
+    } catch (GLib.Error e) {
+        stderr.printf(e.message);
         return 1;
     }
 
