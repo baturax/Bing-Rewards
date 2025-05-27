@@ -14,7 +14,7 @@ int main(string[] args) {
 
         foreach (var i in list) {
             string e = Uri.escape_string(i, null, false);
-            string c = "firefox https://www.bing.com/search?q=" + e + "&FORM=R5FD";
+            string c = "microsoft-edge-stable https://www.bing.com/search?q=" + e + "&FORM=R5FD";
 
             GLib.Process.spawn_command_line_async(c);
 
